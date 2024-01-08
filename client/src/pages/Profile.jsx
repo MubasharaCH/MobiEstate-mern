@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react'
+import  { useState ,useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from "firebase/storage"
 import { useRef } from 'react'
@@ -8,11 +8,12 @@ import { updateUserStart,updateUserFailure,updateUserSuccess,
   deleteUserFailure,deleteUserStart,deleteUserSuccess 
   ,SignOutStart,signOutFailure,SignOutSuccess, signInSuccess
 } from '../redux/user/userSlice'
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 
 export const Profile = () => {
   const fileRef=useRef(null)
+  const navigate=useNavigate();
   const dispatch=useDispatch();
   const [file,setFile]=useState(undefined)
   const {currentUser,loading,error}=useSelector((state)=>state.user)
@@ -108,14 +109,15 @@ export const Profile = () => {
    const handleSignOut= async()=>{
       try{
     dispatch(SignOutStart());
-   const res= await fetch('/api/auth/Signout')
-      
+   const res= await fetch('/api/auth/Signout') 
    const data= await res.json();
+     
    if(data.success=== false){
      dispatch(signOutFailure(data.message))
      return;
    }
     dispatch(SignOutSuccess(data))
+    navigate('/signin')
       }catch(err){
         dispatch(signOutFailure(err.message))
       }
