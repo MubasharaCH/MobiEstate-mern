@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'
@@ -49,11 +49,11 @@ useEffect(()=>{
         <Link to="/about">
         <li className='text-slate-700 hidden  sm:inline hover:underline'>About</li>
         </Link>
-      <Link to="/profile">
-        { currentUser ? ( <img  className =" rounded-full h-7 w-7 object-cover" src={currentUser.avatar} alt="profile" />
-
-        ):(   <li className='text-slate-700  hover:underline'>Sign In</li>)
-      
+        <Link to="/signin">
+        { currentUser ? ( <Link to={'/profile'}><img  className =" rounded-full h-7 w-7 object-cover" src={currentUser.avatar} alt="profile"/> </Link>
+         
+        ):(<li className='text-slate-700  hover:underline'>
+        <Link to={'/signin'}>Sign In </Link></li>)
         }
        
         </Link>
